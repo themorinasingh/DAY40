@@ -19,10 +19,9 @@ class FlightData:
 
     def find_cheapest_flight(self, data_dict):
 
-        if data_dict is None or 'data' not in data_dict or not data_dict['data']:
-            return None
+            if data_dict is None or 'data' not in data_dict or not data_dict['data']:
+                return None
 
-        try:
 
             data = data_dict['data'][0]
             price = data['price']['total']
@@ -52,8 +51,7 @@ class FlightData:
 
             return cheapest_flight
 
-        except (KeyError, IndexError):
-            return None
+
 
 
 

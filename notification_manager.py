@@ -1,7 +1,7 @@
 import smtplib
 
 
-EMAIL = "YOUR EMAIL"
+EMAIL = "{YOUR EMAIL}"
 PASSWORD = "zojt megh llag prok"
 
 class NotificationManager:

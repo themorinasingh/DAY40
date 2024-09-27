@@ -1,14 +1,14 @@
 import requests
 from pprint import pprint
 
-URL = 'https://api.sheety.co/"YOUR API KEY/TOKEN"/filghtDealsProject/prices'
-PUTURL = 'https://api.sheety.co/"YOUR API KEY/TOKEN"/filghtDealsProject/prices/'
+URL = 'https://api.sheety.co/{YOUR KEY}/filghtDealsProject/prices'
+PUTURL = 'https://api.sheety.co/{YOUR KEY}/filghtDealsProject/prices/'
 
 
 
 class DataManager:
     def __init__(self):
-        self.sheet_data = self.get_data()
+        self.sheet_data = self.get_data()['prices']
 
     def get_data(self):
         response = requests.get(url=URL)
@@ -20,8 +20,10 @@ class DataManager:
         response = requests.put(url=url, json=payload)
 
     def get_customer_emails(self):
-        response = requests.get(url='https://api.sheety.co/"YOUR API KEY/TOKEN"/filghtDealsProject/userDatabase')
+        response = requests.get(url="https://api.sheety.co/{YOUR KEY}/filghtDealsProject/userDatabase")
         customer_list = response.json()['userDatabase']
         user_emails  =  [customer['email'] for customer in customer_list]
         return user_emails
 
+test = DataManager()
+print(test.get_data())

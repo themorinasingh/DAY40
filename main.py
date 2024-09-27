@@ -33,7 +33,7 @@ email_list = my_spreadsheet.get_customer_emails()
 
 #-----------------------------------------------------------------------------------#
 for data in sheet_data:
-    try:
+
         flight_data = flight_search.check_flights(data, departure_date=tomorrow, return_date=six_month_from_today)
         # print(flight_data)
         num_flights = int(flight_data['meta']['count'])
@@ -42,8 +42,16 @@ for data in sheet_data:
             if flight_data is None:
                 continue
 
-
         cheapest_flight = flight_check.find_cheapest_flight(flight_data)
+
+        for email in email_list:
+            notification_manager.send_mail(flight_price=cheapest_flight.price,
+                                           from_iata=cheapest_flight.origin_airport,
+                                           to_iata=cheapest_flight.destination_airport,
+                                           from_date=cheapest_flight.out_date,
+                                           to_date=cheapest_flight.return_date,
+                                           to_email=email)
+
 
         print(cheapest_flight.price)
         print(cheapest_flight.origin_airport)
@@ -53,17 +61,10 @@ for data in sheet_data:
         print(cheapest_flight.stops)
         print("")
 
-    except:
-        continue
 
-    else:
-        for email in email_list:
-            notification_manager.send_mail(flight_price=cheapest_flight.price,
-                                           from_iata=cheapest_flight.origin_airport,
-                                           to_iata=cheapest_flight.destination_airport,
-                                           from_date=cheapest_flight.out_date,
-                                           to_date=cheapest_flight.return_date,
-                                           to_email=email)
+
+
+
 
 
 
